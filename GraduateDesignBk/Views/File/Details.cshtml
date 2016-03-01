@@ -1,0 +1,22 @@
+﻿@model GraduateDesignBk.Models.FileDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@*public class FileDetail
+    {
+        public FileViewModel file {get; set; }
+        public List<ApplicationUser> Receives { get; set; }
+    }*@
+
+@if (Model.Receives.Count()==0)
+{
+    <h2>该文件是小轩管理员上传供大家下载</h2>
+}
+else
+{
+    <h1>   该文件有小明学生在2015年10月3日上传给自己的导师李博士，王博士。</h1>
+}
+
+  

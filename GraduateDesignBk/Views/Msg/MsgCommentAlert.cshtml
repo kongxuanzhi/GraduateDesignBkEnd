@@ -1,0 +1,13 @@
+﻿@model IEnumerable<GraduateDesignBk.Models.ViewsModel.MsgViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+@using (Html.BeginForm("DeleteMany", "Msg", new { msgType = ViewBag.msgType }, FormMethod.Post, new { id = "form_DeleteMany" }))
+{
+    <input type="hidden" id="DeleteMany" name="Id" value="" />
+}
+<i><b>评论通知消息</b></i>
+<input type="checkbox" id="Totalselect" onclick="CheckDelete()" />
+<label for="Totalselect" class="btn btn-default">全 选</label>
+<a href="javascript:Submit('DeleteMany')" class="btn btn-default">删除</a>
+@Html.Partial("_MsgListPatital", Model)

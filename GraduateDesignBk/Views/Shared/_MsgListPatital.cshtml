@@ -1,0 +1,33 @@
+﻿@model IEnumerable<GraduateDesignBk.Models.ViewsModel.MsgViewModel>
+<style>
+    .media-body, .media-left, .media-right {
+        display: table-cell;
+        vertical-align: top;
+    }
+
+    .media-left, .media > .pull-left {
+        padding-right: 10px;
+    }
+</style>
+@foreach (var item in Model)
+{
+    <div class="media" style="border: 1px solid rgba(122, 52, 177, 0.92);border-radius:12px;padding:11px;position: inherit;">
+        <div class="media-left">
+            <label for="@item.NID">
+                <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="@item.Photo" data-holder-rendered="true" style="width: 64px; height: 64px;">
+            </label>
+        </div>
+        <div class="media-body" style="width:100%">
+            <div class="media-heading"><input type="checkbox" id="@item.NID" name="delId" value="@item.NID" /> <span style="color:burlywood">@item.userType</span> <a href="#">@item.FromName</a><spans style="float:right;padding-top:3px;">@item.CreateTime</spans></div>
+            <span>: &nbsp;&nbsp;@item.Detail</span>
+            <div>
+                @foreach (var uitem in item.sendInfo)
+                {
+                    <a href="#" title="@uitem.userType">
+                        <span>@@@uitem.ReceiveName ,</span>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+}

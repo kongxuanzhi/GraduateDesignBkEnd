@@ -1,0 +1,30 @@
+﻿@model GraduateDesignBk.Models.PersonStuOrMentor
+
+@{
+    ViewBag.Title = "stuOrTeachers";
+    ViewDataDictionary dic = new ViewDataDictionary();
+    dic.Add("Id", Model.Id);
+    dic.Add("self", Model.userType);
+    dic.Add("userType", Model.subType);
+
+    if (Model.userType == "教师")
+    {
+        dic.Add("nav_title", "学生");
+    }
+    else
+    {
+        dic.Add("nav_title", "教师");
+    }
+}
+
+@Html.Partial("_NavSelfPartial", Model.counts, dic)
+<label for="Totalselect" class="btn btn-default">全 选</label>
+<input type="checkbox" id="Totalselect" onclick="CheckDelete()" />
+<a  class="btn btn-default" href="/Account/List/?Id=@Model.Id&userType=@Model.subType&subtype=unSorT">添加 @dic["nav_title"]</a> 
+<a href="javascript:Submit('RemoveFromRelation');" onclick="return confirm('你确定要移除这些成员吗？')" class="btn btn-default">移除</a>
+@using (Html.BeginForm("RemoveFromRelation", "Account", new {Id=Model.Id, userType = @Model.userType }, FormMethod.Post, new { id = "form_RemoveFromRelation" }))
+{
+    <input type="hidden" id="RemoveFromRelation" name="Ids" value="" />
+}
+
+@Html.Partial("_UsersListPartial",Model.userItems,dic)

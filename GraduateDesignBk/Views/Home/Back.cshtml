@@ -1,0 +1,194 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/AdminCss")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- main / large navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top bootstrap-admin-navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="~/Home/Index"><b>毕业设计管理</b></a>
+            </div>
+            <nav id="bs-navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.Partial("_LoginPartial")
+                    </li>
+                    <li>
+                        <a href="/">网站前台 <i class="glyphicon glyphicon-share-alt"></i></a>
+                    </li>
+                </ul>
+            </nav>
+        </div><!-- /.container -->
+    </nav>
+    <div class="container">
+        <!-- left, vertical navbar & content -->
+        <div class="row">
+            <!-- left, vertical navbar -->
+            <div class="col-md-2 bootstrap-admin-col-left">
+                <ul id="side" class="nav navbar-collapse collapse bootstrap-admin-navbar-side">
+                    <li>
+                        <a href="/Bar/"><i class="glyphicon glyphicon-chevron-right"></i>问题管理</a>
+                    </li>
+
+                    <li>
+                        <a href="/File/Index"><i class="glyphicon glyphicon-chevron-right"></i> 文件中心</a>
+                    </li>
+                    <li >
+                        <a href="/Msg/Index"><i class="glyphicon glyphicon-chevron-right"></i>消息管理</a>
+                    </li>
+                    <li>
+                        <a href="/Note/Index"><i class="glyphicon glyphicon-chevron-right"></i>通知管理</a>
+                    </li>
+                    <li>
+                        <a href="/Announce/Index"><i class="glyphicon glyphicon-chevron-right"></i>公告管理</a>
+                    </li>
+                    @*<li>
+                            <a href="javascript:void(0)" onclick="sideDown(this)"> <i class="glyphicon glyphicon-chevron-right"></i> Calendar</a>
+                            <ul class="nav navbar-collapse bootstrap-admin-navbar-side">
+                                <li><a href="/Home/About"><i class="glyphicon glyphicon-chevron-right"></i> Submenu 1</a></li>
+                                <li><a href="/Home/Index"><i class="glyphicon glyphicon-chevron-right"></i> Submenu 2</a></li>
+                                <li><a href="#"><i class="glyphicon glyphicon-chevron-right"></i> Submenu 3</a></li>
+                            </ul>
+                        </li>*@
+                    <li>
+                        <a href="javascript:void(0)" onclick="sideDown(this)">   <i class="glyphicon glyphicon-chevron-right"></i> 用户管理</a>
+                        <ul class="nav navbar-collapse bootstrap-admin-navbar-side">
+                            <li><a href="/Account/List/?userType=学生"><i class="glyphicon glyphicon-chevron-right"></i>学院学生</a></li>
+                            <li><a href="/Account/List/?userType=教师 "><i class="glyphicon glyphicon-chevron-right"></i> 指导老师</a></li>
+                        </ul>
+                    <li>
+                        <a href="/Role/Index">    <i class="glyphicon glyphicon-chevron-right"></i>角色管理</a>
+                    </li>
+                </ul>
+            </div>
+            <script>
+                $(function ($) {
+                    $.each($("#side  li"), function (i, n) {
+                        $(this).click(function () {
+                            var Href = $(this).children("a").attr("href").trim();
+                            //alert(Href)
+                            $("#side  li").removeAttr("class")
+                            $(this).attr("class", "active");
+                            $("#iframepage").attr("src", Href)
+                            return false;
+                        });
+                       
+                    });
+                })
+            </script>
+          
+            <!-- content -->
+            <div id="body" style="padding:0px" class="col-md-10">
+                <iframe src="/Bar/Index" id="iframepage" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight()"></iframe>
+            </div>
+              <script type="text/javascript" language="javascript">
+                  function iFrameHeight() {
+                        var ifm= document.getElementById("iframepage");
+                        var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+                        if(ifm != null && subWeb != null) {
+                            ifm.height = subWeb.body.scrollHeight;
+                            ifm.width = $("#body").width()  
+                        }
+                }
+            </script>
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="navbar navbar-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <footer role="contentinfo">
+                        <p class="left">Bootstrap 3.x Admin Theme</p>
+                        <p class="right">&copy; 2013 <a href="http://www.meritoo.pl" target="_blank">Meritoo.pl</a></p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span id="CurrentAction" style="display:none">  @ViewBag.Active</span>
+    @*<div class="container body-content">
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/customMutiplySelect")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script>
+        //        if (Href.indexOf(CurrentHome) > 0) {
+        //            //  alert("yes")
+        //            $(this).addClass("active");
+        //            var gra = $(this).children("a").children("i");
+        //            var uls = $(this).children("ul");
+        //            if (uls.hasClass("hidden")) {
+        //                gra.removeClass("glyphicon-chevron-right");
+        //                gra.addClass("glyphicon-chevron-down");
+        //                uls.removeClass("hidden");
+        //            }
+        //            else {
+        //                uls.addClass("hidden");
+        //                gra.removeClass("glyphicon-chevron-down");
+        //                gra.addClass("glyphicon-chevron-right");
+        //            }
+        //        }
+        //        //    $(this).click(function (e) {
+        //        //        // alert(1);
+        //        //        //alert(i);
+        //        //        e.stopPropagation();
+        //        //        $("#side  li").removeClass();
+        //        //        $(this).addClass("active");
+
+
+
+        //    })
+        //});
+        function sideDown(obj) {
+            ////$("#sides").hide();
+            //var side = $("a ~ ul");// $("#sides");
+            ////alert(side.next("li").addClass("hidden"))
+            ////var side2 = $("a > i");
+            var gra = $(obj).children("i");
+            var uls = $(obj).parent().children("ul");
+            if (uls.hasClass("hidden")) {
+                gra.removeClass("glyphicon-chevron-right");
+                gra.addClass("glyphicon-chevron-down");
+                uls.removeClass("hidden");
+            }
+            else {
+                uls.addClass("hidden");
+                gra.removeClass("glyphicon-chevron-down");
+                gra.addClass("glyphicon-chevron-right");
+            }
+        }
+    </script>
+</body>
+</html>

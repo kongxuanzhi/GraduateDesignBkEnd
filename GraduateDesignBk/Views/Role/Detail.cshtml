@@ -1,0 +1,48 @@
+﻿@model GraduateDesignBk.Models.ApplicationRole
+@{
+    ViewBag.Title = "Detail";
+}
+ 
+
+<ol class="breadcrumb">
+    <li><a href="/Role/Index">角色管理</a></li>
+    <li class="ative"> @Model.Name 角色详情</li>
+</ol>
+    
+<h3>角色详情:</h3>
+<blockquote>
+    <h4>角色名：@Model.Name </h4>
+    <h4 class="text-overflow">关于角色：@Model.Description</h4>
+    <h4>创建时间：@Model.CreateTime</h4>
+ 
+</blockquote>
+
+<h3>现有成员列表:</h3>
+@Html.ActionLink("添加未分组的成员", "List","Account",routeValues:new {  userType = @Model.Name, type = "UnGroupList" },htmlAttributes: new { @class="btn btn-default"})
+<table class="table table-hover table-condensed table-bordered" style="text-align:center">
+    <thead>
+        <tr>
+            <td>成员名</td>
+            <td>专业</td>  
+            <td>操作</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in ViewBag.Users)
+        {
+            <tr>
+                <td>@user.RealName</td>
+                <td>@user.Mayjor</td>
+                <td>
+                    @using (Html.BeginForm("RemoveUserFromRole", "Role",  new { Id = user.Id, roleName= @Model.Name }, FormMethod.Post))
+                    {
+                        @Html.ActionLink("详 情","UserDetail", "Account", new { Id = user.Id }, new { @class = "btn btn-default" })
+                        <input type="submit" name="name" value="移除" class="btn btn-danger" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>角色权限管理:</h3>

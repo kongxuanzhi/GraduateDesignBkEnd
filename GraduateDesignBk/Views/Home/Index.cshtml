@@ -1,0 +1,375 @@
+﻿@{
+    Layout = "~/Views/Shared/_HeaderLayout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+<style>
+    /*所需css*/
+    .span-mark {
+        display: inline-block;
+        background-color: #f63756;
+        position: absolute;
+        z-index: 1;
+        height: 14px;
+        line-height: 20px;
+        margin: -28px 0 0;
+        width: 4px;
+    }
+</style>
+<div class="row">
+    <div class="col-md-7">
+        @if (Request.IsAuthenticated)
+        {
+            <form name="Post" style="margin-top:-20px">
+                <div class="form-group">
+                    <label for="Title"></label>
+                    <input type="text" name="Title" class="form-control" id="Title" placeholder="标题">
+                </div>
+                <div class="form-group">
+                    <label for="Description"></label>
+                    <textarea name="Description" id="Description" class="form-control" placeholder="描述"></textarea>
+
+                </div>
+                <div style="margin-bottom:57px;">
+                    <a href="javascript:Post()" class="btn btn-default" style="float:right;margin:10px 0px;background-color: #44546A; color:#FFF">提问</a>
+                </div>
+            </form>
+            <div class="row"></div>
+        }
+        <div class="_ask-box" style="/*margin-left:-15px;margin-right:-15px*/">
+            <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
+                <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#latest" onclick="LatestQ()" id="latest-tab" role="tab" data-toggle="tab" aria-controls="latest" aria-expanded="true">最新</a>
+                    </li>
+                    <li role="presentation" >
+                        <a href="#allq" onclick="AllQ()" id="allq-tab" role="tab" data-toggle="tab" aria-controls="allq" aria-expanded="true">全部</a>
+                    </li>
+                     <li role="presentation" class="">
+                        <a href="#hotest" onclick="HotQ()" role="tab" id="hotest-tab" data-toggle="tab" aria-controls="hotest" aria-expanded="false">热门</a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#unAnswer" onclick="UnAnsQ()" role="tab" id="unAnswer-tab" data-toggle="tab" aria-controls="unAnswer" aria-expanded="false">未回答</a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade active in" id="allq" aria-labelledby="allq-tab">
+                        <div id="allQues"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade active in" id="latest" aria-labelledby="latest-tab">
+                        <div id="latestQues"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="hotest" aria-labelledby="hotest-tab">
+                        <div id="hotestQues"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="unAnswer" aria-labelledby="unAnswer-tab">
+                        <div id="unAnsQues"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="SearchResult" aria-labelledby="SearchResult-tab">
+                        <div id="SearchResultQues"></div>
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li class="previous">
+                                <a href="javascript:Previou()"><span aria-hidden="true">&larr;</span> 上一页</a>
+                            </li>
+                            <li class="next">
+                                <a href="javascript:Next()">下一页 <span aria-hidden="true">&rarr;</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-4">
+        <form class="" role="search">
+            <div class="form-group">
+                <input type="text" id="searchKey" onkeyup="SearchR()" class="form-control search clearable" placeholder="搜索问题">
+                <i class="faa glyphicon glyphicon-search"></i>
+            </div>
+        </form>
+        <hr style="border-top:1px solid #ccc; margin-top: 5px; margin-bottom: 5px;" width="100%" SIZE="3">
+        <div>
+            <p style="margin-bottom: 10px;margin-top: 20px;margin-left: 10px; font-size: 14px;">精选答疑</p>
+            <span class="span-mark"></span>
+            <ul id="hotQA" style="padding-left: 0px;list-style: none;">
+                <li>
+                    <a href="https://www.baidu.com/">毕业设计高分攻略</a>
+                </li>
+                <li>
+                    <a href="#">毕业设计到底怎么写？</a>
+                </li>
+                <li>
+                    <a href="#">毕业设计格式是怎样的？</a>
+                </li>
+                <li>
+                    <a href="#">毕业设计至少写多少字？</a>
+                </li>
+            </ul>
+        </div>
+        <hr style="border-top:1px solid #ccc; margin-top: 5px; margin-bottom: 5px;" width="100%" SIZE="3">
+        <div>
+            <p style="margin-bottom: 10px;margin-top: 20px;margin-left: 10px; font-size: 14px;">快速链接</p>
+            <span class="span-mark"></span>
+            <ul style="padding-left: 0px;list-style: none;">
+                <li>
+                    <a href="http://www.jxust.cn/">>>江西理工大学官网</a>
+                </li>
+                <li>
+                    <a href="http://lxy.jxust.edu.cn/">>>江西理工大学官网理学院</a>
+                </li>
+                <li>
+                    <a href="http://jw.jxust.edu.cn/">>>江西理工大学教务管理系统</a>
+                </li>
+                <li>
+                    <a href="http://zsjy.jxust.edu.cn/">>>江西理工大学招生就业处</a>
+                </li>
+            </ul>
+        </div>
+        <hr style="border-top:1px solid #ccc; margin-top: 5px; margin-bottom: 5px;" width="100%" SIZE="3">
+        <div>
+            <p onmouseover="$('#allAns').show()" onmouseout="$('#allAns').hide()" style="margin-bottom: 10px;margin-top: 20px;margin-left: 10px; font-size: 14px;">
+                通知公告
+                <a id="allAns" href="/Home/ListAnnounce" style="display:none;float:right;font-size:smaller;margin-top: 2px;color: #999999;"><span style="width:20px;height:20px">全部>></span></a>
+            </p>
+            <span class="span-mark"></span>
+            <ul id="Announce" style="padding-left: 0px;list-style: none;">
+                <li>
+                    <a href="#">[01-22] 关于研究生考试的温馨提示</a>
+                </li>
+                <li>
+                    <a href="#">[12-14] 我院关于做好学期末相关学生教育管理工作的通知</a>
+                </li>
+                <li>
+                    <a href="#">[11-22] 关于做好2016届优秀毕业生评选工作的通知</a>
+                </li>
+                <li>
+                    <a href="#">[11-11] 理学院2015年社会奖学金候选人名单公示</a>
+                </li>
+                <li>
+                    <a href="#">[10-11] 关于填写2014-2015学年个人先进事迹材料的通知</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    var currentIndex = 1;
+    var url;
+    var id;
+    function Like(QID) {
+        $.ajax({
+            url: "/Bar/QuestLike",
+            type: "POST",
+            data: { "QID": QID },
+            success: function (data) {
+                //alert(3)
+                if (data == "addsuccess") {
+                    // alert($("#" + QID + id).html())
+                    $("#" + QID + id).html(parseInt($("#" + QID + id).html()) + 1)
+                } else if (data == "delsuccess") {
+                    //alert($("#" + QID + id).html())
+                    $("#" + QID + id).html(parseInt($("#" + QID + id).html()) - 1)
+                }
+                else {
+                    eval(data)
+                }
+            }
+        });
+    }
+    function Previou() {
+        currentIndex = currentIndex - 1 < 1 ? 1 : currentIndex - 1;
+        QueryQues(currentIndex, url, id, $("#searchKey").val());
+    }
+    function Next() {
+        if ($("#" + id).html() != '无内容！') {
+            currentIndex = currentIndex + 1;
+            QueryQues(currentIndex, url, id, $("#searchKey").val());
+        }
+    }
+    function QueryQues(currentIndex, url, id, search) {
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: { "currentIndex": currentIndex, "searchstr": search },
+            success: function (data) {
+                //new Date(parseInt(data[i].RaiseQuesTime.replace(/\D/igm, ""))).toLocaleString()
+                $("#" + id).empty();
+                for (var i = 0; i < data.length; i++) {
+                    var s =data[i].Solved ==true?'已解决':"待解决";
+                    var p = '<div class="question-list media clearfix">' +
+                    '<div class="pull-left question-list-action">' +
+                        '<img src="' + data[i].FromPhoto + '" width="50" height="50" alt="' + data[i].FromName + '" class="">' +
+                                '<div style="text-align:center;font-size: 12px;margin-top:5px">' + data[i].FromName + '</div>' +
+                            '</div>' +
+                            '<div class="media-body">' +
+                                '<a href="/Home/BarDetail/' + data[i].QID + '" target="_blank" class="question-list-title">' + data[i].Title + '</a>' +
+                                '<div class="pull-right">' +
+                                    '<div class="action-top clearfix no-answer">' +
+                                        '<span class="pull-left">' + data[i].CommentNum + '&nbsp</span>' +
+                                        '<span class="pull-right glyphicon glyphicon-comment"></span>' +
+                                    '</div>' +
+
+                                    '<div class="action-bottom clearfix">' +
+                                        '<span class="pull-left" id="' + data[i].QID + id + '">' + data[i].Likes + '</span>' +
+                                        '<a href="javascript:Like' + "('" + data[i].QID + "')" + '"><span        class="pull-right glyphicon glyphicon-thumbs-up"></span></a>' +
+                                    '</div>' +
+
+                                '</div>' +
+                                '<div class="question-list-bar">' +
+                                    '<span><span class="glyphicon glyphicon-time"></span>' + data[i].RaiseQuesTime + '</span>' +
+                                    '<span>&nbsp;</span>' +
+                                    '<span><span class="glyphicon glyphicon-plus"></span> ' + data[i].ReadTimes + '次浏览</span>' +
+                                    '<span>&nbsp;</span>' +
+                                    '<span><span class="glyphicon glyphicon-wrench"></span> ' + s + '</span>' +
+                                '</div>' +
+                        '</div>' +
+                    '</di>';
+                    $("#" + id).append(p);
+                }
+                if (data.length == 0) {
+                    $("#" + id).html('无内容！');
+                }
+            }
+        });
+    }
+    function SearchR() {
+        var li = '<li role="presentation" ><a href="#SearchResult" role="tab" id="SearchResult-tab" data-toggle="tab" aria-controls="SearchResult" aria-expanded="false">搜索结果</a></li>'
+        $("#myTabs").html(li);
+        $("#latest").empty(); $("#unAnsQues").empty(); $("#latestQues").empty();
+        currentIndex = 1;
+        url = "/Bar/Search";
+        id = "SearchResultQues";
+        QueryQues(1, url, id, $("#searchKey").val());
+        document.getElementById("SearchResult-tab").click();
+    }
+    function UnAnsQ() {
+        url = "/Bar/UnAns";
+        id = "unAnsQues";
+        QueryQues(1, url, id, null);
+        currentIndex = 1;
+    }
+    function HotQ() {
+        currentIndex = 1;
+        url = "/Bar/Hotest";
+        id = "hotestQues";
+        QueryQues(currentIndex, url, id, null);
+    }
+    function LatestQ() {
+        currentIndex = 1;
+        url = "/Bar/Latest";
+        id = "latestQues";
+        QueryQues(currentIndex, url, id, null);
+    }
+    function AllQ() {
+        currentIndex = 1;
+        url = "/Bar/All";
+        id = "allQues"
+        QueryQues(currentIndex, url, id, null);
+    }
+
+    function AnnounceList() {
+        $.ajax({
+            url: "/Announce/Latest10",
+            type: "POST",
+            data: null,
+            success: function (data) {
+                $("#Announce").empty();
+                for (var i = 0; i < data.length; i++) {
+                    var an = '<li><a href="/Announce/Detail?ANID=' + data[i].ANID + '"  target="_blank">[' + data[i].Time + "]" + data[i].Title + '</a></li>';
+                    $("#Announce").append(an);
+                }
+            }
+        });
+    }
+    $(function ($) {
+        LatestQ()
+        AnnounceList();
+        $.ajax({
+            url: "/Bar/BestQuesAns",
+            type: "POST",
+            data: null,
+            success: function (data) {
+                $("#hotQA").empty();
+                for (var i = 0; i < data.length; i++) {
+                    var mo = '<li><a href="/Home/BarDetail/' + data[i].QID + '">' + data[i].Title + '</a></li>';
+                    $("#hotQA").append(mo);
+                }
+            }
+        });
+
+        
+    });
+    function Post() {
+        var form = document.forms["Post"];
+        alert("发表提问");
+        var Descrption = CKEDITOR.instances.Description.getData();
+        $.ajax({
+            url: "/Bar/Post",
+            type: "POST",
+            data: {
+                "Title": form.Title.value,
+                "Description": Descrption
+            },
+            success: function (data) {
+                var str = data.split('|');
+                if (str[0] == "logined") {
+                    alert(str[1]);
+                    if (str[1] == "发表成功!") {
+                        $("#Title").val(null)
+                        $("#Description").val(null)
+                        location = location;
+                    }
+                }
+                else {
+                    eval(data)
+                }
+            }
+        });
+    }
+
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    //var maxlength = 500;
+    $(function ($) {
+        _editor = CKEDITOR.replace('Description',
+        {
+            extraPlugins: 'codesnippet',
+            codeSnippet_theme: 'monokai_sublime',
+            extraPlugins: 'uploadimage',
+            uploadUrl: '/uploader/upload.php',
+            height: '119px',
+            toolbarCanCollapse: true,
+            toolbarExpanded: false,
+            smiley_columns: 100,
+            smiley_images: [
+                '0.png', '1.png', '2.png', '3.png'
+            ],
+            customConfig: 'custumconfig.js',
+        });
+        CKFinder.SetupCKEditor(_editor, '/ckfinder/');
+        _editor.on('instanceReady', function (ev) { ev.editor.execCommand('toolbarCollapse'); });
+    });
+
+    //_editor.on('key', function (event) {
+    //    var oldhtml = _editor.document.getBody().getHtml();
+    //    var description = oldhtml.replace(/<.*?>/ig, "");
+    //    var etop = $("#cke_1_top");
+    //    var _slen = maxlength - description.length;
+    //    var canwrite = $("<label  id='canwrite'>剩200字</label>");
+    //    if (etop.find("#canwrite").length < 1) {
+    //        canwrite.css({ border: '1px #f1f1f1 solid', 'line-height': '28px', color: '#999' });
+    //        etop.prepend(canwrite);
+    //    }
+    //    var _label = etop.find("#canwrite");
+    //    if (description.length > maxlength) {
+    //        //alert("最多可以输入"+maxlength+"个文字，您已达到最大字数限制");
+    //        _editor.setData(oldhtml);
+    //        _label.html("剩0字");
+    //    } else {
+    //        _label.html("剩" + _slen + "字");
+    //    }
+    //});
+</script>
